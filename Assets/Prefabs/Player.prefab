@@ -897,7 +897,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 7
+  lateralSpeed: 5
+  lateralLimit: 2.2
   jumpForce: 5
+  swipeThreshold: 100
   groundCheck: {fileID: 980385791065629829}
   groundCheckRadius: 0.2
   groundLayer:

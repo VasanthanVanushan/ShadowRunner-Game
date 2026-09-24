@@ -4,14 +4,20 @@ public class PlayerRunner : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float forwardSpeed = 6f;
+    [SerializeField] private float lateralSpeed = 5f;
+    [SerializeField] private float lateralLimit = 4f;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 7f;
+    [SerializeField] private float swipeThreshold = 100f;
 
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.25f;
     [SerializeField] private LayerMask groundLayer;
+
+    private Vector2 touchStartPosition;
+    private bool isTouching;
 
     private Rigidbody rb;
     private Animator animator;
@@ -28,13 +34,14 @@ public class PlayerRunner : MonoBehaviour
     {
         CheckGround();
 
-        HandleJump();
+        HandleTouchInput();
         UpdateAnimator();
     }
 
     private void FixedUpdate()
     {
         MoveForward();
+        MoveLateral();
     }
 
     private void MoveForward()
@@ -46,16 +53,82 @@ public class PlayerRunner : MonoBehaviour
         rb.linearVelocity = velocity;
     }
 
-    private void HandleJump()
+    private void MoveLateral()
     {
-        if (Input.GetMouseButtonDown(0) && isGrounded)
-        {
-            Vector3 velocity = rb.linearVelocity;
-            velocity.y = 0f;
-            rb.linearVelocity = velocity;
+        float horizontalInput = 0f;
 
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        if (isTouching)
+        {
+            Vector2 currentTouchPosition = Input.GetTouch(0).position;
+
+            float horizontalDifference = currentTouchPosition.x - touchStartPosition.x;
+
+            horizontalInput = Mathf.Clamp(horizontalDifference / 200f,-1f,1f);
         }
+
+        Vector3 velocity = rb.linearVelocity;
+
+        velocity.x = horizontalInput * lateralSpeed;
+
+        float nextX = transform.position.x +velocity.x * Time.fixedDeltaTime;
+
+        nextX = Mathf.Clamp(nextX,-lateralLimit,lateralLimit);
+
+        if (nextX <= -lateralLimit && velocity.x < 0)
+        {
+            velocity.x = 0f;
+        }
+
+        if (nextX >= lateralLimit && velocity.x > 0)
+        {
+            velocity.x = 0f;
+        }
+
+        rb.linearVelocity = velocity;
+    }
+
+    private void HandleTouchInput()
+    {
+        if (Input.touchCount == 0)
+        {
+            isTouching = false;
+            return;
+        }
+
+        Touch touch = Input.GetTouch(0);
+
+        switch (touch.phase)
+        {
+            case TouchPhase.Began:
+                touchStartPosition = touch.position;
+                isTouching = true;
+                break;
+
+            case TouchPhase.Ended:
+                Vector2 swipeDistance = touch.position - touchStartPosition;
+                // Swipe upward to jump
+                if (swipeDistance.y > swipeThreshold && Mathf.Abs(swipeDistance.y) > Mathf.Abs(swipeDistance.x) && isGrounded)
+                {
+                    Jump();
+                }
+                isTouching = false;
+                break;
+
+            case TouchPhase.Canceled:
+                isTouching = false;
+                break;
+        }
+    }
+
+    private void Jump()
+    {
+        Vector3 velocity = rb.linearVelocity;
+
+        velocity.y = 0f;
+
+        rb.linearVelocity = velocity;
+
+        rb.AddForce(Vector3.up * jumpForce,ForceMode.Impulse);
     }
 
     private void CheckGround()
@@ -73,12 +146,4 @@ public class PlayerRunner : MonoBehaviour
         animator.SetBool("IsJumping", !isGrounded);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (groundCheck == null)
-            return;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(groundCheck.position,groundCheckRadius);
-    }
 }
