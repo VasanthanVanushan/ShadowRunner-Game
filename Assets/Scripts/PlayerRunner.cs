@@ -146,4 +146,50 @@ public class PlayerRunner : MonoBehaviour
         animator.SetBool("IsJumping", !isGrounded);
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            ContactPoint contact = collision.GetContact(0);
+
+            Vector3 normal = contact.normal;
+
+            // Mostly horizontal surface = player hit the top
+            if (normal.y > 0.5f)
+            {
+                // Hit the top of the obstacle
+                animator.SetTrigger("Fall1");
+                Debug.Log("Fall1 Triggered");
+            }
+            else
+            {
+                Vector3 localNormal = transform.InverseTransformDirection(normal);
+
+                // Side collision
+                if (Mathf.Abs(localNormal.x) > Mathf.Abs(localNormal.z))
+                {
+                    animator.SetTrigger("Fall3");
+                    Debug.Log("Fall3 Triggered");
+                }
+                // Front face collision
+                else
+                {
+                    animator.SetTrigger("Fall2");
+                    Debug.Log("Fall2 Triggered");
+                }
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Oil"))
+        {
+            animator.SetTrigger("Fall4");
+            Debug.Log("Fall4 Triggered");
+        }
+    }
+
+
+
+    
+
 }
