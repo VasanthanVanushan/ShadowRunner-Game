@@ -16,6 +16,9 @@ public class PlayerRunner : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.25f;
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("Game Over")]
+    [SerializeField] private GameObject gameOverUI;
+
     private Vector2 touchStartPosition;
     private bool isTouching;
 
@@ -23,11 +26,20 @@ public class PlayerRunner : MonoBehaviour
     private Animator animator;
 
     private bool isGrounded;
+    private bool isFalling;
+    private bool gameEnded;
+
+    
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(false);
+        }
     }
 
     private void Update()
@@ -36,10 +48,15 @@ public class PlayerRunner : MonoBehaviour
 
         HandleTouchInput();
         UpdateAnimator();
+
+        CheckFallAnimationFinished();
     }
 
     private void FixedUpdate()
     {
+        if (gameEnded)
+            return;
+
         MoveForward();
         MoveLateral();
     }
@@ -89,6 +106,9 @@ public class PlayerRunner : MonoBehaviour
 
     private void HandleTouchInput()
     {
+        if (gameEnded)
+            return;
+
         if (Input.touchCount == 0)
         {
             isTouching = false;
@@ -143,53 +163,117 @@ public class PlayerRunner : MonoBehaviour
 
     private void UpdateAnimator()
     {
+        if (isFalling)
+            return;
+
         animator.SetBool("IsJumping", !isGrounded);
     }
 
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (gameEnded)
+            return;
+
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             ContactPoint contact = collision.GetContact(0);
 
             Vector3 normal = contact.normal;
 
-            // Mostly horizontal surface = player hit the top
+            rb.linearVelocity = Vector3.zero;
+
+            // Hit the top of the obstacle
             if (normal.y > 0.5f)
             {
-                // Hit the top of the obstacle
-                animator.SetTrigger("Fall1");
-                Debug.Log("Fall1 Triggered");
+                StartFall("Fall1");
             }
             else
             {
-                Vector3 localNormal = transform.InverseTransformDirection(normal);
+                Vector3 localNormal =
+                    transform.InverseTransformDirection(normal);
 
                 // Side collision
                 if (Mathf.Abs(localNormal.x) > Mathf.Abs(localNormal.z))
                 {
-                    animator.SetTrigger("Fall3");
-                    Debug.Log("Fall3 Triggered");
+                    StartFall("Fall3");
                 }
-                // Front face collision
+                // Front collision
                 else
                 {
-                    animator.SetTrigger("Fall2");
-                    Debug.Log("Fall2 Triggered");
+                    StartFall("Fall2");
                 }
             }
         }
 
         if (collision.gameObject.CompareTag("Oil"))
         {
-            animator.SetTrigger("Fall4");
-            Debug.Log("Fall4 Triggered");
+            StartFall("Fall4");
         }
     }
 
 
+    private void StartFall(string fallTrigger)
+    {
+        if (isFalling || gameEnded)
+            return;
 
-    
+        isFalling = true;
+
+        animator.SetTrigger(fallTrigger);
+
+        Debug.Log(fallTrigger + " Triggered");
+    }
+
+
+    private void CheckFallAnimationFinished()
+    {
+        if (!isFalling || gameEnded)
+            return;
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        // Check if the animator is currently playing one
+        // of the fall animations.
+        bool playingFallAnimation = stateInfo.IsName("FallFlat") || stateInfo.IsName("FallOver") || stateInfo.IsName("FallingDown") || stateInfo.IsName("SweepFall");
+
+        if (playingFallAnimation)
+        {
+            // normalizedTime:
+            // 0 = animation just started
+            // 1 = animation completed once
+            // >1 = animation has gone beyond one cycle
+
+            if (stateInfo.normalizedTime >= 1f && !stateInfo.loop)
+            {
+                EndGame();
+            }
+        }
+    }
+
+
+    private void EndGame()
+    {
+        if (gameEnded)
+            return;
+
+        gameEnded = true;
+
+        isFalling = false;
+
+        // Pause the game
+        Time.timeScale = 0f;
+
+        // Show Game Over UI
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+
+        Debug.Log("Game Over - Fall animation completed");
+    }
+
+
+
 
 }
