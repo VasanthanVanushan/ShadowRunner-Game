@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4909291302264627205}
   m_Layer: 0
   m_Name: Traphome_Mid
-  m_TagString: Untagged
+  m_TagString: SawBlade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 6721110991697851781}
   m_Layer: 0
   m_Name: SawBlade
-  m_TagString: Untagged
+  m_TagString: SawBlade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,9 +135,9 @@ Transform:
   m_GameObject: {fileID: 4089249851829852359}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.38, y: 0.5, z: 31.55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -1.14, y: 0, z: 482.63956}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9112421652548772929}
   - {fileID: 806107649693151754}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 4129433553878906315}
   m_Layer: 0
   m_Name: Sawblade
-  m_TagString: Untagged
+  m_TagString: SawBlade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

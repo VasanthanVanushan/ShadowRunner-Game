@@ -6,8 +6,13 @@ TagManager:
   tags:
   - Obstacle
   - FxTemporaire
-  - Obstcales
   - Oil
+  - JumpTrap
+  - SpikeTrap
+  - SawBlade
+  - PressTrap
+  - PoisonTrap
+  - FlameThrower
   layers:
   - Default
   - TransparentFX

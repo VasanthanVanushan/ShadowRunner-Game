@@ -54,7 +54,7 @@ public class PlayerRunner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (gameEnded)
+        if (gameEnded || isFalling)
             return;
 
         MoveForward();
@@ -210,6 +210,44 @@ public class PlayerRunner : MonoBehaviour
         {
             StartFall("Fall4");
         }
+
+        if (collision.gameObject.CompareTag("JumpTrap"))
+        {
+            StartFall("Fall5");
+        }
+
+        if (collision.gameObject.CompareTag("SpikeTrap"))
+        {
+            StartFall("Fall6");
+        }
+
+        if (collision.gameObject.CompareTag("SawBlade"))
+        {
+            StartFall("Fall7");
+        }
+        
+        if (collision.gameObject.CompareTag("PressTrap"))
+        {
+            StartFall("Fall8");
+        }
+
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (gameEnded || isFalling)
+            return;
+
+        if (other.CompareTag("PoisonTrap"))
+        {
+            StartFall("Stun");
+        }
+
+        if (other.CompareTag("FlameThrower"))
+        {
+            StartFall("Crawl");
+        }
     }
 
 
@@ -219,6 +257,9 @@ public class PlayerRunner : MonoBehaviour
             return;
 
         isFalling = true;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
 
         animator.SetTrigger(fallTrigger);
 
@@ -233,9 +274,8 @@ public class PlayerRunner : MonoBehaviour
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        // Check if the animator is currently playing one
-        // of the fall animations.
-        bool playingFallAnimation = stateInfo.IsName("FallFlat") || stateInfo.IsName("FallOver") || stateInfo.IsName("FallingDown") || stateInfo.IsName("SweepFall");
+        // Check if the animator is currently playing one of the fall animations.
+        bool playingFallAnimation = stateInfo.IsName("FallFlat") || stateInfo.IsName("FallOver") || stateInfo.IsName("FallingDown") || stateInfo.IsName("SweepFall") || stateInfo.IsName("FlyingBackDown") || stateInfo.IsName("StandingDeathForward") || stateInfo.IsName("DyingBackwards") || stateInfo.IsName("StandingDeathLeft") || stateInfo.IsName("DrunkWalking") || stateInfo.IsName("CrawlBackwards");
 
         if (playingFallAnimation)
         {
