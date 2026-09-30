@@ -211,10 +211,6 @@ public class PlayerRunner : MonoBehaviour
             StartFall("Fall4");
         }
 
-        if (collision.gameObject.CompareTag("JumpTrap"))
-        {
-            StartFall("Fall5");
-        }
 
         if (collision.gameObject.CompareTag("SpikeTrap"))
         {
@@ -247,6 +243,10 @@ public class PlayerRunner : MonoBehaviour
         if (other.CompareTag("FlameThrower"))
         {
             StartFall("Crawl");
+        }
+        if (other.CompareTag("JumpTrap"))
+        {
+            StartFall("Fall5");
         }
     }
 
