@@ -12,9 +12,18 @@ public class TrapSwitch : MonoBehaviour
 
     private bool isActivated = false;
 
+    [Header("Puzzle")]
+    private SequencePuzzle sequencePuzzle;
+
+
     private void Awake()
     {
         trapParent = transform.parent.gameObject;
+    }
+
+    private void Start()
+    {
+        sequencePuzzle = FindFirstObjectByType<SequencePuzzle>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,7 +34,21 @@ public class TrapSwitch : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        TurnOffTrap();
+
+        Time.timeScale = 0f;
+
+        sequencePuzzle.StartPuzzle(OnPuzzleFinished);
+    }
+
+
+    private void OnPuzzleFinished(bool success)
+    {
+        if (success)
+        {
+            TurnOffTrap();
+        }
+
+        Time.timeScale = 1f;
     }
 
     private void TurnOffTrap()
