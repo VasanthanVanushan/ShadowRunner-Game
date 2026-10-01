@@ -14,6 +14,7 @@ public class TrapSwitch : MonoBehaviour
 
     [Header("Puzzle")]
     private SequencePuzzle sequencePuzzle;
+    private MathPuzzle mathPuzzle;
 
 
     private void Awake()
@@ -24,6 +25,7 @@ public class TrapSwitch : MonoBehaviour
     private void Start()
     {
         sequencePuzzle = FindFirstObjectByType<SequencePuzzle>();
+        mathPuzzle = FindFirstObjectByType<MathPuzzle>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,7 +39,16 @@ public class TrapSwitch : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        sequencePuzzle.StartPuzzle(OnPuzzleFinished);
+        int puzzleType = Random.Range(0, 2);
+
+        if (puzzleType == 0)
+        {
+            sequencePuzzle.StartPuzzle(OnPuzzleFinished);
+        }
+        else
+        {
+            mathPuzzle.StartPuzzle(OnPuzzleFinished);
+        }
     }
 
 
