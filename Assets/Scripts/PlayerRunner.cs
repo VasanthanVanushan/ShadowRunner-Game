@@ -21,7 +21,12 @@ public class PlayerRunner : MonoBehaviour
 
     private Vector2 touchStartPosition;
     private bool isTouching;
+
     private bool inputLocked;
+
+    // Prevents the touch that closed a puzzle
+    // from being interpreted as a jump.
+    private bool waitingForTouchRelease;
 
     private Rigidbody rb;
     private Animator animator;
@@ -30,7 +35,6 @@ public class PlayerRunner : MonoBehaviour
     private bool isFalling;
     private bool gameEnded;
 
-    
 
     private void Awake()
     {
@@ -78,20 +82,20 @@ public class PlayerRunner : MonoBehaviour
     {
         float horizontalInput = 0f;
 
-        if (isTouching)
+        if (isTouching && !waitingForTouchRelease)
         {
             Vector2 currentTouchPosition = Input.GetTouch(0).position;
 
             float horizontalDifference = currentTouchPosition.x - touchStartPosition.x;
 
-            horizontalInput = Mathf.Clamp(horizontalDifference / 200f,-1f,1f);
+            horizontalInput = Mathf.Clamp(horizontalDifference / 200f, -1f, 1f);
         }
 
         Vector3 velocity = rb.linearVelocity;
 
         velocity.x = horizontalInput * lateralSpeed;
 
-        float nextX = transform.position.x +velocity.x * Time.fixedDeltaTime;
+        float nextX =transform.position.x +velocity.x * Time.fixedDeltaTime;
 
         nextX = Mathf.Clamp(nextX,-lateralLimit,lateralLimit);
 
@@ -113,6 +117,24 @@ public class PlayerRunner : MonoBehaviour
         if (gameEnded)
             return;
 
+        /*
+         * IMPORTANT:
+         * If the puzzle was just closed while the player's
+         * finger was still touching the screen, wait until
+         * that touch completely disappears.
+         */
+        if (waitingForTouchRelease)
+        {
+            if (Input.touchCount == 0)
+            {
+                waitingForTouchRelease = false;
+            }
+
+            isTouching = false;
+
+            return;
+        }
+
         if (Input.touchCount == 0)
         {
             isTouching = false;
@@ -124,21 +146,32 @@ public class PlayerRunner : MonoBehaviour
         switch (touch.phase)
         {
             case TouchPhase.Began:
+
                 touchStartPosition = touch.position;
+
                 isTouching = true;
+
                 break;
 
+
             case TouchPhase.Ended:
+
                 Vector2 swipeDistance = touch.position - touchStartPosition;
-                // Swipe upward to jump
-                if (swipeDistance.y > swipeThreshold && Mathf.Abs(swipeDistance.y) > Mathf.Abs(swipeDistance.x) && isGrounded)
+
+                /*
+                 * Swipe upward to jump.
+                 */
+                if (swipeDistance.y > swipeThreshold &&Mathf.Abs(swipeDistance.y) > Mathf.Abs(swipeDistance.x) &&isGrounded)
                 {
                     Jump();
                 }
+
                 isTouching = false;
                 break;
 
+
             case TouchPhase.Canceled:
+
                 isTouching = false;
                 break;
         }
@@ -170,9 +203,8 @@ public class PlayerRunner : MonoBehaviour
         if (isFalling)
             return;
 
-        animator.SetBool("IsJumping", !isGrounded);
+        animator.SetBool("IsJumping",!isGrounded);
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -187,22 +219,18 @@ public class PlayerRunner : MonoBehaviour
 
             rb.linearVelocity = Vector3.zero;
 
-            // Hit the top of the obstacle
             if (normal.y > 0.5f)
             {
                 StartFall("Fall1");
             }
             else
             {
-                Vector3 localNormal =
-                    transform.InverseTransformDirection(normal);
+                Vector3 localNormal =transform.InverseTransformDirection(normal);
 
-                // Side collision
                 if (Mathf.Abs(localNormal.x) > Mathf.Abs(localNormal.z))
                 {
                     StartFall("Fall3");
                 }
-                // Front collision
                 else
                 {
                     StartFall("Fall2");
@@ -215,7 +243,6 @@ public class PlayerRunner : MonoBehaviour
             StartFall("Fall4");
         }
 
-
         if (collision.gameObject.CompareTag("SpikeTrap"))
         {
             StartFall("Fall6");
@@ -225,14 +252,12 @@ public class PlayerRunner : MonoBehaviour
         {
             StartFall("Fall7");
         }
-        
+
         if (collision.gameObject.CompareTag("PressTrap"))
         {
             StartFall("Fall8");
         }
-
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -248,12 +273,12 @@ public class PlayerRunner : MonoBehaviour
         {
             StartFall("Crawl");
         }
+
         if (other.CompareTag("JumpTrap"))
         {
             StartFall("Fall5");
         }
     }
-
 
     private void StartFall(string fallTrigger)
     {
@@ -270,24 +295,28 @@ public class PlayerRunner : MonoBehaviour
         Debug.Log(fallTrigger + " Triggered");
     }
 
-
     private void CheckFallAnimationFinished()
     {
         if (!isFalling || gameEnded)
             return;
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo stateInfo =
+            animator.GetCurrentAnimatorStateInfo(0);
 
-        // Check if the animator is currently playing one of the fall animations.
-        bool playingFallAnimation = stateInfo.IsName("FallFlat") || stateInfo.IsName("FallOver") || stateInfo.IsName("FallingDown") || stateInfo.IsName("SweepFall") || stateInfo.IsName("FlyingBackDown") || stateInfo.IsName("StandingDeathForward") || stateInfo.IsName("DyingBackwards") || stateInfo.IsName("StandingDeathLeft") || stateInfo.IsName("DrunkWalking") || stateInfo.IsName("CrawlBackwards");
+        bool playingFallAnimation =
+            stateInfo.IsName("FallFlat") ||
+            stateInfo.IsName("FallOver") ||
+            stateInfo.IsName("FallingDown") ||
+            stateInfo.IsName("SweepFall") ||
+            stateInfo.IsName("FlyingBackDown") ||
+            stateInfo.IsName("StandingDeathForward") ||
+            stateInfo.IsName("DyingBackwards") ||
+            stateInfo.IsName("StandingDeathLeft") ||
+            stateInfo.IsName("DrunkWalking") ||
+            stateInfo.IsName("CrawlBackwards");
 
         if (playingFallAnimation)
         {
-            // normalizedTime:
-            // 0 = animation just started
-            // 1 = animation completed once
-            // >1 = animation has gone beyond one cycle
-
             if (stateInfo.normalizedTime >= 1f && !stateInfo.loop)
             {
                 EndGame();
@@ -304,8 +333,18 @@ public class PlayerRunner : MonoBehaviour
             isTouching = false;
             touchStartPosition = Vector2.zero;
         }
+        else
+        {
+            /*
+             * If a touch is still active when the puzzle closes,
+             * do NOT let that same touch become a player input.
+             */
+            if (Input.touchCount > 0)
+            {
+                waitingForTouchRelease = true;
+            }
+        }
     }
-
 
     private void EndGame()
     {
@@ -316,10 +355,8 @@ public class PlayerRunner : MonoBehaviour
 
         isFalling = false;
 
-        // Pause the game
         Time.timeScale = 0f;
 
-        // Show Game Over UI
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(true);
@@ -327,8 +364,4 @@ public class PlayerRunner : MonoBehaviour
 
         Debug.Log("Game Over - Fall animation completed");
     }
-
-
-
-
 }

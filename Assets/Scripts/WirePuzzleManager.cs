@@ -59,8 +59,6 @@ public class WirePuzzleManager : MonoBehaviour
         wrongAttempts = 0;
 
         resultText.text = "";
-
-        Time.timeScale = 0f;
     }
 
     // --------------------------------------------------
@@ -324,9 +322,6 @@ public class WirePuzzleManager : MonoBehaviour
 
             onPuzzleFinished = null;
 
-            // Resume game.
-            Time.timeScale = 1f;
-
             // Close puzzle.
             puzzlePanel.SetActive(false);
         }
@@ -344,9 +339,6 @@ public class WirePuzzleManager : MonoBehaviour
         onPuzzleFinished?.Invoke(false);
 
         onPuzzleFinished = null;
-
-        // Resume game normally.
-        Time.timeScale = 1f;
 
         // Close puzzle UI.
         puzzlePanel.SetActive(false);
