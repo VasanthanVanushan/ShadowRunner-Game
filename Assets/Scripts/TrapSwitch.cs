@@ -9,12 +9,16 @@ public class TrapSwitch : MonoBehaviour
     [SerializeField] private bool disableParticles = true;
     [SerializeField] private bool disableAnimators = true;
     [SerializeField] private bool disableColliders = true;
+    private PlayerRunner playerRunner;
 
     private bool isActivated = false;
 
     [Header("Puzzle")]
     private SequencePuzzle sequencePuzzle;
     private MathPuzzle mathPuzzle;
+    private WirePuzzleManager wirePuzzle;
+
+
 
 
     private void Awake()
@@ -26,6 +30,9 @@ public class TrapSwitch : MonoBehaviour
     {
         sequencePuzzle = FindFirstObjectByType<SequencePuzzle>();
         mathPuzzle = FindFirstObjectByType<MathPuzzle>();
+        wirePuzzle = FindFirstObjectByType<WirePuzzleManager>();
+
+        playerRunner = FindFirstObjectByType<PlayerRunner>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,24 +43,39 @@ public class TrapSwitch : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
+        // Stop player input
+        if (playerRunner != null)
+        {
+            playerRunner.SetInputLocked(true);
+        }
 
         Time.timeScale = 0f;
 
-        int puzzleType = Random.Range(0, 2);
+        int puzzleType = Random.Range(0, 3);
 
         if (puzzleType == 0)
         {
             sequencePuzzle.StartPuzzle(OnPuzzleFinished);
         }
-        else
+        else if(puzzleType == 1)
         {
             mathPuzzle.StartPuzzle(OnPuzzleFinished);
+        }
+        else
+        {
+            wirePuzzle.StartPuzzle(OnPuzzleFinished);
         }
     }
 
 
     private void OnPuzzleFinished(bool success)
     {
+        // Clear any previous touch state
+        if (playerRunner != null)
+        {
+            playerRunner.SetInputLocked(false);
+        }
+
         if (success)
         {
             TurnOffTrap();

@@ -1,0 +1,10 @@
+# ninja log v5
+42	1591	8126224103419261	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	2f25207bb91107da
+33	1649	8126224104064366	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	b7f7e7e135073aac
+0	1690	8126224104492693	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	ba42b921a0f9b2f8
+52	1716	8126224104737925	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	dbac6dfcb06d8b80
+16	1739	8126224104965810	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	769c268d9ea1dab8
+70	1911	8126224106704056	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	d25fa88776282775
+25	1988	8126224107466916	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	f48257fef6e30cff
+9	2137	8126224108957763	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	926b9bfa727b22b1
+2138	2247	8126224110012452	D:/KnightOwl_Project/ShadowRunner-Game/ShadowRunner-Game/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2m49603n/obj/arm64-v8a/libgame.so	57c145aee79260a3

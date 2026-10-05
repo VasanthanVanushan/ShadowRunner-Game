@@ -21,6 +21,7 @@ public class PlayerRunner : MonoBehaviour
 
     private Vector2 touchStartPosition;
     private bool isTouching;
+    private bool inputLocked;
 
     private Rigidbody rb;
     private Animator animator;
@@ -44,6 +45,9 @@ public class PlayerRunner : MonoBehaviour
 
     private void Update()
     {
+        if (inputLocked)
+            return;
+
         CheckGround();
 
         HandleTouchInput();
@@ -288,6 +292,17 @@ public class PlayerRunner : MonoBehaviour
             {
                 EndGame();
             }
+        }
+    }
+
+    public void SetInputLocked(bool locked)
+    {
+        inputLocked = locked;
+
+        if (locked)
+        {
+            isTouching = false;
+            touchStartPosition = Vector2.zero;
         }
     }
 
