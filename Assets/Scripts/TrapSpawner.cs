@@ -14,6 +14,9 @@ public class TrapSpawner : MonoBehaviour
     [SerializeField] private float minDistance = 10f;
     [SerializeField] private float maxDistance = 25f;
 
+    [Header("Switch Offset")]
+    [SerializeField] private float switchXOffset = 1.5f;
+
     private float currentZ;
 
     private void Start()
@@ -42,6 +45,15 @@ public class TrapSpawner : MonoBehaviour
 
             // Spawn the trap
             GameObject spawnedTrap = Instantiate(selectedTrap,spawnPosition,spawnRotation,transform);
+
+            // Find Switch inside the spawned trap
+            Transform switchTransform = spawnedTrap.transform.Find("Switch");
+            if (switchTransform != null)
+            {
+                Vector3 switchPosition = switchTransform.localPosition;
+                switchPosition.x += switchXOffset;
+                switchTransform.localPosition = switchPosition;
+            }
 
             // Random distance before the next trap
             float randomDistance = Random.Range(minDistance, maxDistance);
