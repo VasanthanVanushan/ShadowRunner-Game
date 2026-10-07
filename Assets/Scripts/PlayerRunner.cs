@@ -287,6 +287,8 @@ public class PlayerRunner : MonoBehaviour
 
         isFalling = true;
 
+        AudioManager.Instance.GameOver();
+
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
@@ -300,8 +302,7 @@ public class PlayerRunner : MonoBehaviour
         if (!isFalling || gameEnded)
             return;
 
-        AnimatorStateInfo stateInfo =
-            animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         bool playingFallAnimation =
             stateInfo.IsName("FallFlat") ||
