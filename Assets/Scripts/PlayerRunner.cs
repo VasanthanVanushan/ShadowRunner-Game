@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerRunner : MonoBehaviour
 {
@@ -205,7 +207,7 @@ public class PlayerRunner : MonoBehaviour
         if (isFalling)
             return;
 
-         if (isVictory)
+        if (isVictory)
             return;
 
         animator.SetBool("IsJumping",!isGrounded);
@@ -290,8 +292,22 @@ public class PlayerRunner : MonoBehaviour
             isVictory = true;
 
             animator.SetTrigger("Victory");
-            portal.SetActive(true);
+            StartCoroutine(DelaySmall());
+
+            StartCoroutine(DelaySceneChange());
         }
+    }
+
+    private IEnumerator DelaySmall()
+    {
+        yield return new WaitForSeconds(1f);
+        portal.SetActive(true);
+    }
+
+    private IEnumerator DelaySceneChange()
+    {
+        yield return new WaitForSeconds(4.5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void StartFall(string fallTrigger)

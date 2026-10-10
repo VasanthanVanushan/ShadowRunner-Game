@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &327525004
 Light:
   m_ObjectHideFlags: 0
@@ -2750,7 +2750,7 @@ MonoBehaviour:
   cameraHeight: 3
   followSpeed: 20
   orbitSpeed: 40
-  startingAngle: 0
+  startingAngle: 40
 --- !u!4 &8015040573221175766
 Transform:
   m_ObjectHideFlags: 0
