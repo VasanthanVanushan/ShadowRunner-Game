@@ -13,6 +13,8 @@ TagManager:
   - PressTrap
   - PoisonTrap
   - FlameThrower
+  - VictoryCircle
+  - Portal
   layers:
   - Default
   - TransparentFX

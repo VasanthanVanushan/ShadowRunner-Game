@@ -34,6 +34,9 @@ public class PlayerRunner : MonoBehaviour
     private bool isGrounded;
     private bool isFalling;
     private bool gameEnded;
+    private bool isVictory;
+    [SerializeField] private GameObject portal;
+
 
 
     private void Awake()
@@ -62,7 +65,7 @@ public class PlayerRunner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (gameEnded || isFalling)
+        if (gameEnded || isFalling || isVictory)
             return;
 
         MoveForward();
@@ -203,6 +206,9 @@ public class PlayerRunner : MonoBehaviour
         if (isFalling)
             return;
 
+        if (isVictory)
+            return;
+
         animator.SetBool("IsJumping",!isGrounded);
     }
 
@@ -277,6 +283,16 @@ public class PlayerRunner : MonoBehaviour
         if (other.CompareTag("JumpTrap"))
         {
             StartFall("Fall5");
+        }
+
+        if (other.CompareTag("VictoryCircle"))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            isVictory = true;
+
+            animator.SetTrigger("Victory");
+            portal.SetActive(true);
         }
     }
 
