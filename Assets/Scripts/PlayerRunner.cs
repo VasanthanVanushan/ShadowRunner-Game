@@ -34,9 +34,8 @@ public class PlayerRunner : MonoBehaviour
     private bool isGrounded;
     private bool isFalling;
     private bool gameEnded;
-    private bool isVictory;
+     private bool isVictory;
     [SerializeField] private GameObject portal;
-
 
 
     private void Awake()
@@ -206,7 +205,7 @@ public class PlayerRunner : MonoBehaviour
         if (isFalling)
             return;
 
-        if (isVictory)
+         if (isVictory)
             return;
 
         animator.SetBool("IsJumping",!isGrounded);
@@ -284,8 +283,7 @@ public class PlayerRunner : MonoBehaviour
         {
             StartFall("Fall5");
         }
-
-        if (other.CompareTag("VictoryCircle"))
+        if (other.CompareTag("Victory"))
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
