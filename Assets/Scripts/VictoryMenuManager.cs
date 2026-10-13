@@ -44,7 +44,7 @@ public class VictoryMenuManager : MonoBehaviour
 
     public void PlayAgain()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(0);
     }
 
     public void MainMenu()
