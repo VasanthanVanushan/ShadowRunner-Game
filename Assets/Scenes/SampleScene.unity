@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 33ab377b49aa14f6fae6e5bac230a5d4, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -14329,7 +14329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &526588434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17394,7 +17394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &639596673
 Transform:
   m_ObjectHideFlags: 0
@@ -75414,6 +75414,10 @@ PrefabInstance:
       propertyPath: gameOverUI
       value: 
       objectReference: {fileID: 1304771506}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: forwardSpeed
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -99494,7 +99498,6 @@ SceneRoots:
   - {fileID: 117784801}
   - {fileID: 1714454333}
   - {fileID: 4314995464153658508}
-  - {fileID: 639596673}
   - {fileID: 750750768}
   - {fileID: 1579319279}
   - {fileID: 1609930812}
@@ -99503,9 +99506,10 @@ SceneRoots:
   - {fileID: 971490214}
   - {fileID: 949767816}
   - {fileID: 2006189364}
+  - {fileID: 639596673}
   - {fileID: 526588435}
+  - {fileID: 1694641777}
   - {fileID: 479942372}
   - {fileID: 1793111536}
-  - {fileID: 1694641777}
   - {fileID: 254324799}
   - {fileID: 545793285}
