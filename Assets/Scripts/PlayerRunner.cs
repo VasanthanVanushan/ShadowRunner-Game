@@ -317,7 +317,7 @@ public class PlayerRunner : MonoBehaviour
 
         isFalling = true;
 
-        AudioManager.Instance.GameOver();
+        AudioManager.Instance.PlayGameOverSFX();
 
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;

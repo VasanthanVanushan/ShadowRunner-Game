@@ -1,4 +1,6 @@
+
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,9 +10,14 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource sfxSource;
 
-    [Header("Audio Clips")]
-    [SerializeField] private AudioClip gameBGM;
+    [Header("Scene Background Music")]
+    [SerializeField] private AudioClip mainMenuBGM; // Scene 0
+    [SerializeField] private AudioClip gameplayBGM; // Scene 1
+    [SerializeField] private AudioClip victoryBGM;  // Scene 2
+
+    [Header("Sound Effects")]
     [SerializeField] private AudioClip gameOverSFX;
+    [SerializeField] private AudioClip buttonClickSFX;
 
     private void Awake()
     {
@@ -23,27 +30,79 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Setup BGM
-        bgmSource.clip = gameBGM;
-        bgmSource.loop = true;
         bgmSource.playOnAwake = false;
+        bgmSource.loop = true;
 
-        // Start background music
-        bgmSource.Play();
-
-        // Setup SFX
         sfxSource.playOnAwake = false;
+        sfxSource.loop = false;
     }
 
-    public void GameOver()
+    private void OnEnable()
     {
-        // Stop background music
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        PlayMusicForScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        PlayMusicForScene(scene.buildIndex);
+    }
+
+    private void PlayMusicForScene(int sceneIndex)
+    {
+        AudioClip selectedMusic = null;
+
+        switch (sceneIndex)
+        {
+            case 0:
+                selectedMusic = mainMenuBGM;
+                break;
+
+            case 1:
+                selectedMusic = gameplayBGM;
+                break;
+
+            case 2:
+                selectedMusic = victoryBGM;
+                break;
+        }
+
+        bgmSource.Stop();
+        bgmSource.clip = selectedMusic;
+
+        if (selectedMusic != null)
+        {
+            bgmSource.Play();
+        }
+    }
+
+    public void PlayGameOverSFX()
+    {
         bgmSource.Stop();
 
-        // Play game-over sound
         if (gameOverSFX != null)
         {
             sfxSource.PlayOneShot(gameOverSFX);
+        }
+    }
+
+    public void PlayButtonClickSFX()
+    {
+        if (buttonClickSFX != null)
+        {
+            sfxSource.PlayOneShot(buttonClickSFX);
         }
     }
 
@@ -52,6 +111,20 @@ public class AudioManager : MonoBehaviour
         if (clip != null)
         {
             sfxSource.PlayOneShot(clip);
+        }
+    }
+
+    public void StopMusic()
+    {
+        bgmSource.Stop();
+    }
+
+    public void RestartMusic()
+    {
+        if (bgmSource.clip != null)
+        {
+            bgmSource.Stop();
+            bgmSource.Play();
         }
     }
 }
