@@ -99,6 +99,12 @@ public class TrapSwitch : MonoBehaviour
 
         foreach (Transform child in children)
         {
+            TrapProximityAudio proximityAudio = child.GetComponent<TrapProximityAudio>();
+
+            if (proximityAudio != null)
+            {
+                proximityAudio.enabled = false;
+            }
             // Disable Particle Systems
             if (disableParticles)
             {

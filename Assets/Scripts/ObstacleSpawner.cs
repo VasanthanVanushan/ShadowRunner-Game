@@ -5,9 +5,7 @@ public class ObstacleSpawner : MonoBehaviour
     [Header("Obstacle Prefabs")]
     [SerializeField] private GameObject[] obstacles;
 
-    [Header("Spawn Settings")]
-    [SerializeField] private float startZ = 20f;
-    [SerializeField] private float endZ = 200f;
+    
 
     [Header("Distance Between Obstacles")]
     [SerializeField] private float minDistance = 8f;
@@ -20,6 +18,10 @@ public class ObstacleSpawner : MonoBehaviour
     [Header("Floor")]
     [SerializeField] private float floorY = 0f;
 
+    [Header("Land Z Range")]
+    [SerializeField] private Transform landStart;
+    [SerializeField] private Transform landEnd;
+
     private void Start()
     {
         SpawnObstacles();
@@ -27,16 +29,33 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void SpawnObstacles()
     {
+        if (obstacles == null || obstacles.Length == 0)
+        {
+            Debug.LogWarning("No obstacles assigned.");
+            return;
+        }
+
+        if (landStart == null || landEnd == null)
+        {
+            Debug.LogWarning("Assign Land Start and Land End in the Inspector.");
+            return;
+        }
+
+        float startZ = landStart.position.z;
+        float endZ = landEnd.position.z;
+
+        if (endZ < startZ)
+        {
+            Debug.LogWarning("Land End must be after Land Start.");
+            return;
+        }
+
         float currentZ = startZ;
 
         while (currentZ <= endZ)
         {
             SpawnObstacle(currentZ);
-
-            // Random distance to the next obstacle
-            float randomDistance = Random.Range(minDistance, maxDistance);
-
-            currentZ += randomDistance;
+            currentZ += Random.Range(minDistance, maxDistance);
         }
     }
 

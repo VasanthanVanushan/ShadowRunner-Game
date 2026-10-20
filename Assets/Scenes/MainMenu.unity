@@ -288,9 +288,9 @@ MonoBehaviour:
   bgmSource: {fileID: 1469320930}
   sfxSource: {fileID: 1142411076}
   trapAudioSource: {fileID: 1330255540}
-  mainMenuBGM: {fileID: 8300000, guid: dcf51d29eda0a444fae37e9dbde2c66f, type: 3}
+  mainMenuBGM: {fileID: 8300000, guid: ebb1deeb52a7a2b439cf548c054e31c2, type: 3}
   gameplayBGM: {fileID: 8300000, guid: dcf51d29eda0a444fae37e9dbde2c66f, type: 3}
-  victoryBGM: {fileID: 8300000, guid: dcf51d29eda0a444fae37e9dbde2c66f, type: 3}
+  victoryBGM: {fileID: 8300000, guid: 8fdee8193af92664f93cb859e80ee064, type: 3}
   gameOverSFX: {fileID: 8300000, guid: 47607476e58ee324f9693959014c7b19, type: 3}
   buttonClickSFX: {fileID: 8300000, guid: 54e8059458d4bbc43bc4a723a42251fe, type: 3}
 --- !u!4 &452056119
