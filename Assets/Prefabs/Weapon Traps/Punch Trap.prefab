@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7995269723893049811}
+  - component: {fileID: -8469542338743554505}
   m_Layer: 0
   m_Name: Punch Trap
   m_TagString: Obstacle
@@ -32,6 +33,21 @@ Transform:
   - {fileID: 6384902041502014050}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
+--- !u!114 &-8469542338743554505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435021854841080448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df20b1d992cc27419a6eaf15d10fe4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  trapAudioClip: {fileID: 8300000, guid: 7f9b04f1d996e364b955d6d917ea25ca, type: 3}
+  detectionDistance: 35
 --- !u!1 &3032788494933347844
 GameObject:
   m_ObjectHideFlags: 0

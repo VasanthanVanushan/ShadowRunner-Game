@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource trapAudioSource;
 
     [Header("Scene Background Music")]
     [SerializeField] private AudioClip mainMenuBGM; // Scene 0
@@ -35,6 +36,9 @@ public class AudioManager : MonoBehaviour
 
         sfxSource.playOnAwake = false;
         sfxSource.loop = false;
+
+        trapAudioSource.playOnAwake = false;
+        trapAudioSource.loop = true;
     }
 
     private void OnEnable()
@@ -125,6 +129,32 @@ public class AudioManager : MonoBehaviour
         {
             bgmSource.Stop();
             bgmSource.Play();
+        }
+    }
+
+
+    public void PlayTrapAudio(AudioClip clip)
+    {
+        if (clip == null || trapAudioSource == null)
+            return;
+
+        if (trapAudioSource.clip == clip && trapAudioSource.isPlaying)
+            return;
+
+        trapAudioSource.Stop();
+        trapAudioSource.clip = clip;
+        trapAudioSource.Play();
+    }
+
+    public void StopTrapAudio(AudioClip clip)
+    {
+        if (trapAudioSource == null)
+            return;
+
+        if (trapAudioSource.clip == clip)
+        {
+            trapAudioSource.Stop();
+            trapAudioSource.clip = null;
         }
     }
 }

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6102875886057950612}
   - component: {fileID: 2742514938490437172}
   - component: {fileID: 8965429069134831138}
+  - component: {fileID: -7210141591111964205}
+  - component: {fileID: 3569073173406443988}
   m_Layer: 0
   m_Name: obstacle poisonthrower
   m_TagString: Obstacle
@@ -112,6 +114,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7006425102325853299, guid: dfe5eb226798d44d589ec245dd6903cd, type: 3}
+--- !u!114 &-7210141591111964205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985590163470153493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df20b1d992cc27419a6eaf15d10fe4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  trapAudioClip: {fileID: 8300000, guid: 6d82c4366c892494c99ec5297eb6b60d, type: 3}
+  detectionDistance: 35
+--- !u!114 &3569073173406443988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985590163470153493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df20b1d992cc27419a6eaf15d10fe4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  trapAudioClip: {fileID: 0}
+  detectionDistance: 50
 --- !u!1 &6207844707926850563
 GameObject:
   m_ObjectHideFlags: 0

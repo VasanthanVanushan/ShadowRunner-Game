@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856897951445769984}
+  - component: {fileID: 2130704730159223777}
   m_Layer: 0
   m_Name: Spike Trap
   m_TagString: SpikeTrap
@@ -34,6 +35,21 @@ Transform:
   - {fileID: 7286871148265671366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2130704730159223777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364278930616919544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df20b1d992cc27419a6eaf15d10fe4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  trapAudioClip: {fileID: 8300000, guid: 66de40937aa568a4e8bd3b37ab2bdef4, type: 3}
+  detectionDistance: 35
 --- !u!1 &2349937972540830222
 GameObject:
   m_ObjectHideFlags: 0

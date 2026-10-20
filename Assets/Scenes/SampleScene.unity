@@ -14279,7 +14279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &526588434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17344,7 +17344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &639596673
 Transform:
   m_ObjectHideFlags: 0
@@ -36034,8 +36034,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -165.9779}
-  m_SizeDelta: {x: 781.6638, y: 331.9558}
+  m_AnchoredPosition: {x: 0.0005722, y: -104.36987}
+  m_SizeDelta: {x: 717.27, y: 208.7399}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1304771508
 MonoBehaviour:
@@ -46244,7 +46244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1694641776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75733,7 +75733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6077461279479434311, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6077461279479434311, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -75774,6 +75774,14 @@ PrefabInstance:
     - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
       propertyPath: forwardSpeed
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: tiltSmoothness
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: tiltSensitivity
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -269,6 +269,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4828719081871854043}
   - component: {fileID: 3963531096377984357}
+  - component: {fileID: 6788329781901674041}
+  - component: {fileID: -7284531031623001729}
   m_Layer: 0
   m_Name: jump trap
   m_TagString: JumpTrap
@@ -317,6 +319,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6788329781901674041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7611288267915363198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df20b1d992cc27419a6eaf15d10fe4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  trapAudioClip: {fileID: 8300000, guid: 8bb7fc762ac234e4e9500f649e784204, type: 3}
+  detectionDistance: 35
+--- !u!114 &-7284531031623001729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7611288267915363198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df20b1d992cc27419a6eaf15d10fe4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  trapAudioClip: {fileID: 0}
+  detectionDistance: 50
 --- !u!1001 &655318746287799046
 PrefabInstance:
   m_ObjectHideFlags: 0

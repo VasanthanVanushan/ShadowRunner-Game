@@ -44324,6 +44324,7 @@ GameObject:
   - component: {fileID: 4306358781290255256}
   - component: {fileID: 1814781275887430107}
   - component: {fileID: 3404047173544796402}
+  - component: {fileID: -6021587221553110367}
   m_Layer: 0
   m_Name: Crystals crossfade
   m_TagString: Untagged
@@ -49215,6 +49216,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-6021587221553110367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7247674006419010417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df20b1d992cc27419a6eaf15d10fe4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  trapAudioClip: {fileID: 8300000, guid: 0262bb287cee07d4bb7ea9dffa064da2, type: 3}
+  detectionDistance: 35
 --- !u!1 &9023744930014174606
 GameObject:
   m_ObjectHideFlags: 0

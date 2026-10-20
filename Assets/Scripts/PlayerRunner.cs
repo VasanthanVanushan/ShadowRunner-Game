@@ -36,8 +36,17 @@ public class PlayerRunner : MonoBehaviour
     private bool isGrounded;
     private bool isFalling;
     private bool gameEnded;
-     private bool isVictory;
+    private bool isVictory;
     [SerializeField] private GameObject portal;
+
+
+    [Header("Tilt Controls")]
+    [SerializeField] private bool useTiltControls = true;
+    [SerializeField] private float tiltSensitivity = 2.5f;
+    [SerializeField] private float tiltDeadZone = 0.08f;
+    [SerializeField] private float tiltSmoothness = 8f;
+    private float neutralTilt;
+    private float smoothedTilt;
 
 
     private void Awake()
@@ -49,6 +58,11 @@ public class PlayerRunner : MonoBehaviour
         {
             gameOverUI.SetActive(false);
         }
+    }
+
+    private void Start()
+    {
+        CalibrateTilt();
     }
 
     private void Update()
@@ -82,39 +96,77 @@ public class PlayerRunner : MonoBehaviour
         rb.linearVelocity = velocity;
     }
 
+
     private void MoveLateral()
     {
         float horizontalInput = 0f;
 
-        if (isTouching && !waitingForTouchRelease)
+        if (Application.isEditor)
         {
-            Vector2 currentTouchPosition = Input.GetTouch(0).position;
+            // Test movement using A/D or arrow keys.
+            horizontalInput = Input.GetAxisRaw("Horizontal");
 
-            float horizontalDifference = currentTouchPosition.x - touchStartPosition.x;
+            // Test finger-drag movement using the mouse.
+            if (Input.GetMouseButton(0))
+            {
+                horizontalInput = Mathf.Clamp(
+                    (Input.mousePosition.x - Screen.width / 2f) / 200f,
+                    -1f,
+                    1f
+                );
+            }
+        }
+        else
+        {
+            // Mobile: phone tilt movement.
+            float tiltInput = GetTiltInput();
 
-            horizontalInput = Mathf.Clamp(horizontalDifference / 200f, -1f, 1f);
+            // Mobile: finger-drag movement.
+            float dragInput = 0f;
+
+            if (isTouching &&
+                !waitingForTouchRelease &&
+                Input.touchCount > 0)
+            {
+                Vector2 currentTouchPosition = Input.GetTouch(0).position;
+
+                float horizontalDifference =
+                    currentTouchPosition.x - touchStartPosition.x;
+
+                dragInput = Mathf.Clamp(
+                    horizontalDifference / 200f,
+                    -1f,
+                    1f
+                );
+            }
+
+            // Combine both movement inputs.
+            horizontalInput = Mathf.Clamp(
+                tiltInput + dragInput,
+                -1f,
+                1f
+            );
         }
 
         Vector3 velocity = rb.linearVelocity;
 
         velocity.x = horizontalInput * lateralSpeed;
 
-        float nextX =transform.position.x +velocity.x * Time.fixedDeltaTime;
+        float nextX = transform.position.x +
+                      velocity.x * Time.fixedDeltaTime;
 
-        nextX = Mathf.Clamp(nextX,-lateralLimit,lateralLimit);
+        nextX = Mathf.Clamp(nextX, -lateralLimit, lateralLimit);
 
-        if (nextX <= -lateralLimit && velocity.x < 0)
-        {
-            velocity.x = 0f;
-        }
-
-        if (nextX >= lateralLimit && velocity.x > 0)
+        // Stop horizontal movement at the boundaries.
+        if ((nextX <= -lateralLimit && velocity.x < 0f) ||
+            (nextX >= lateralLimit && velocity.x > 0f))
         {
             velocity.x = 0f;
         }
 
         rb.linearVelocity = velocity;
     }
+
 
     private void HandleTouchInput()
     {
@@ -165,7 +217,7 @@ public class PlayerRunner : MonoBehaviour
                 /*
                  * Swipe upward to jump.
                  */
-                if (swipeDistance.y > swipeThreshold &&Mathf.Abs(swipeDistance.y) > Mathf.Abs(swipeDistance.x) &&isGrounded)
+                if (swipeDistance.y > swipeThreshold && Mathf.Abs(swipeDistance.y) > Mathf.Abs(swipeDistance.x) && isGrounded)
                 {
                     Jump();
                 }
@@ -189,12 +241,12 @@ public class PlayerRunner : MonoBehaviour
 
         rb.linearVelocity = velocity;
 
-        rb.AddForce(Vector3.up * jumpForce,ForceMode.Impulse);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     private void CheckGround()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position,groundCheckRadius,groundLayer);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
 
         if (isGrounded)
         {
@@ -210,7 +262,7 @@ public class PlayerRunner : MonoBehaviour
         if (isVictory)
             return;
 
-        animator.SetBool("IsJumping",!isGrounded);
+        animator.SetBool("IsJumping", !isGrounded);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -232,7 +284,7 @@ public class PlayerRunner : MonoBehaviour
             }
             else
             {
-                Vector3 localNormal =transform.InverseTransformDirection(normal);
+                Vector3 localNormal = transform.InverseTransformDirection(normal);
 
                 if (Mathf.Abs(localNormal.x) > Mathf.Abs(localNormal.z))
                 {
@@ -394,5 +446,36 @@ public class PlayerRunner : MonoBehaviour
         }
 
         Debug.Log("Game Over - Fall animation completed");
+    }
+
+
+    private void CalibrateTilt()
+    {
+        neutralTilt = Input.acceleration.x;
+        smoothedTilt = 0f;
+    }
+
+    private float GetTiltInput()
+    {
+        if (!useTiltControls)
+            return 0f;
+
+        float rawTilt = Input.acceleration.x - neutralTilt;
+
+        if (Mathf.Abs(rawTilt) < tiltDeadZone)
+            rawTilt = 0f;
+
+        rawTilt *= tiltSensitivity;
+
+        rawTilt = Mathf.Clamp(rawTilt, -1f, 1f);
+
+        smoothedTilt = Mathf.Lerp(
+        smoothedTilt,
+        rawTilt,
+        1f - Mathf.Exp(-tiltSmoothness * Time.deltaTime)
+        );
+
+
+        return smoothedTilt;
     }
 }
