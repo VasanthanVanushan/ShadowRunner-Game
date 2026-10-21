@@ -5,12 +5,22 @@ using UnityEngine.SceneManagement;
 public class PlayerRunner : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float forwardSpeed = 6f;
-    [SerializeField] private float lateralSpeed = 5f;
-    [SerializeField] private float lateralLimit = 4f;
+    [SerializeField] private float forwardSpeed = 12f;
+    [SerializeField] private float maxForwardSpeed = 16f;
+    [SerializeField] private float speedIncreaseDuration = 120f;
+
+    [Header("Run Animation Speed")]
+    [SerializeField] private float initialAnimationSpeed = 1.1f;
+    [SerializeField] private float maxAnimationSpeed = 1.25f;
+    private float elapsedRunTime;
+    private float startingForwardSpeed;
+
+
+    [SerializeField] private float lateralSpeed = 5.5f;
+    [SerializeField] private float lateralLimit = 2.2f;
 
     [Header("Jump")]
-    [SerializeField] private float jumpForce = 7f;
+    [SerializeField] private float jumpForce = 5.5f;
     [SerializeField] private float swipeThreshold = 100f;
 
     [Header("Ground Check")]
@@ -63,12 +73,16 @@ public class PlayerRunner : MonoBehaviour
     private void Start()
     {
         CalibrateTilt();
+        startingForwardSpeed = forwardSpeed;
+        elapsedRunTime = 0f;
     }
 
     private void Update()
     {
         if (inputLocked)
             return;
+
+        UpdateSpeedProgression();
 
         CheckGround();
 
@@ -478,4 +492,37 @@ public class PlayerRunner : MonoBehaviour
 
         return smoothedTilt;
     }
+
+    
+    
+    private void UpdateSpeedProgression()
+    {
+        if (gameEnded || isFalling || isVictory)
+            return;
+
+        elapsedRunTime += Time.deltaTime;
+
+        float progress = Mathf.Clamp01(
+            elapsedRunTime / speedIncreaseDuration
+        );
+
+        // Increase player movement speed from 12 to 16.
+        forwardSpeed = Mathf.Lerp(
+            startingForwardSpeed,
+            maxForwardSpeed,
+            progress
+        );
+
+        // Update only the Run state's speed multiplier.
+        float currentRunSpeed = Mathf.Lerp(
+            initialAnimationSpeed,
+            maxAnimationSpeed,
+            progress
+        );
+
+        animator.SetFloat("RunSpeed", currentRunSpeed);
+        Debug.Log("Current Run Animation Speed: " + currentRunSpeed);
+    }
+
+
 }

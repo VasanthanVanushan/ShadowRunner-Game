@@ -20063,6 +20063,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5607819270732653447}
     - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: jumpForce
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
       propertyPath: gameOverUI
       value: 
       objectReference: {fileID: 964058145}
@@ -20071,12 +20075,28 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: lateralSpeed
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
       propertyPath: tiltSmoothness
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
       propertyPath: tiltSensitivity
-      value: 4
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: maxAnimationSpeed
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: initialAnimationSpeed
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: speedIncreaseDuration
+      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
