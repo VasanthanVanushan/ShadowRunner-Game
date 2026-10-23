@@ -41,6 +41,7 @@
   <Project Path="CFXRRuntime.csproj" />
   <Project Path="Unity.AI.Navigation.Editor.csproj" />
   <Project Path="CFXRDemo.csproj" />
+  <Project Path="Unity.2D.Sprite.Editor.csproj" />
   <Project Path="Unity.Recorder.csproj" />
   <Project Path="CFXREditor.csproj" />
   <Project Path="Unity.Multiplayer.Center.Common.csproj" />
