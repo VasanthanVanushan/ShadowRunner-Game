@@ -487,6 +487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 395044900}
   activeScoreText: {fileID: 103951661}
+  gameoverscoreText: {fileID: 241887287}
 --- !u!4 &195018788
 Transform:
   m_ObjectHideFlags: 0
@@ -673,8 +674,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00020981, y: 0.00097656}
-  m_SizeDelta: {x: 245.2, y: 90.187}
+  m_AnchoredPosition: {x: -0.00034714, y: 0.00097656}
+  m_SizeDelta: {x: 293.8, y: 90.187}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &241887287
 MonoBehaviour:
@@ -723,12 +724,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
+  m_fontSize: 72
   m_fontSizeBase: 80
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 72
+  m_fontSizeMax: 85
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1531,7 +1532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &545793285
 Transform:
   m_ObjectHideFlags: 0
@@ -3198,7 +3199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &964058146
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4348,8 +4349,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -136}
-  m_SizeDelta: {x: 382.7838, y: 151.8251}
+  m_AnchoredPosition: {x: 0, y: -124}
+  m_SizeDelta: {x: 293.8034, y: 93.5091}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1386015749
 MonoBehaviour:
@@ -4371,7 +4372,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7b76e5f85e927ee438f2348d785772c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6527f8156af9020418a827a16f5d6794, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21978,6 +21979,10 @@ PrefabInstance:
       propertyPath: lateralSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
+      propertyPath: scoreManager
+      value: 
+      objectReference: {fileID: 195018787}
     - target: {fileID: 6555183099638100257, guid: 58f61ae0384ecf042b639e04a5a1e45b, type: 3}
       propertyPath: tiltSmoothness
       value: 15

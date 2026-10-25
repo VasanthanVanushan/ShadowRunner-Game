@@ -14,7 +14,7 @@ public class HighScoreDisplay : MonoBehaviour
 
         if (highScoreText != null)
         {
-            highScoreText.text = " "+highScore;
+            highScoreText.text = highScore.ToString();
         }
     }
 }

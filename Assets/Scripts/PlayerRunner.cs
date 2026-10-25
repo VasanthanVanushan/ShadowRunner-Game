@@ -58,6 +58,9 @@ public class PlayerRunner : MonoBehaviour
     private float neutralTilt;
     private float smoothedTilt;
 
+    [Header("Score Management")]
+    [SerializeField] private ScoreManager scoreManager;
+
 
     private void Awake()
     {
@@ -75,6 +78,11 @@ public class PlayerRunner : MonoBehaviour
         CalibrateTilt();
         startingForwardSpeed = forwardSpeed;
         elapsedRunTime = 0f;
+
+        if (scoreManager == null)
+        {
+            scoreManager = FindFirstObjectByType<ScoreManager>();
+        }
     }
 
     private void Update()
@@ -443,24 +451,41 @@ public class PlayerRunner : MonoBehaviour
         }
     }
 
+    
     private void EndGame()
     {
         if (gameEnded)
             return;
 
         gameEnded = true;
-
         isFalling = false;
 
+        int finalScore = scoreManager != null
+            ? scoreManager.CurrentScore
+            : 0;
+
+        int originalHighScore = scoreManager != null
+            ? scoreManager.InitialHighScore
+            : int.MaxValue;
+
+        Debug.Log("Original High Score: " + originalHighScore);
+        Debug.Log("Final Score: " + finalScore);
+
+        if (finalScore > originalHighScore)
+        {
+            // New high score: load Scene 2.
+            Time.timeScale = 1f;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+            return;
+        }
+
+        // No new high score: show Game Over.
         Time.timeScale = 0f;
 
         if (gameOverUI != null)
-        {
             gameOverUI.SetActive(true);
-        }
-
-        Debug.Log("Game Over - Fall animation completed");
     }
+
 
 
     private void CalibrateTilt()
