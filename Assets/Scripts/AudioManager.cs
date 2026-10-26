@@ -72,14 +72,17 @@ public class AudioManager : MonoBehaviour
         {
             case 0:
                 selectedMusic = mainMenuBGM;
+                bgmSource.loop = true;
                 break;
 
             case 1:
                 selectedMusic = gameplayBGM;
+                bgmSource.loop = true;
                 break;
 
             case 2:
                 selectedMusic = victoryBGM;
+                bgmSource.loop = false;
                 break;
         }
 

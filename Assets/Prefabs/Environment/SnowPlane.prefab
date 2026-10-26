@@ -2207,7 +2207,6 @@ MonoBehaviour:
   obstacles:
   - {fileID: 7247674006419010417, guid: bfd5e058e95bac04fa0be949597d1143, type: 3}
   - {fileID: 4990101097349505317, guid: 5bb09472a1e6160468ce1de323f1306f, type: 3}
-  - {fileID: 2939054332285092328, guid: 8e1f74c7e756e404fa4fd130d540da9a, type: 3}
   - {fileID: 3833934412903733210, guid: cd30029fd3c2cfb48b9f05f0bdb1e65d, type: 3}
   - {fileID: 8800446004566240899, guid: 7765b07b4d4f59e46bc77ba659b1efb9, type: 3}
   minDistance: 22
@@ -7863,7 +7862,7 @@ Transform:
   m_GameObject: {fileID: 2058740128906833227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.55, z: 4.62}
+  m_LocalPosition: {x: 0, y: 1.55, z: 5}
   m_LocalScale: {x: 0.25, y: 5, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -10,6 +10,8 @@ public class MenuManagerScript : MonoBehaviour
     [Header("Victory Scene References")]
     [SerializeField] private VictoryCameraController victoryCamera;
     [SerializeField] private GameObject victoryMenu;
+    [SerializeField] private GameObject AboutUI;
+
 
     [Header("Victory Settings")]
     [SerializeField] private float cameraMovementDuration = 5f;
@@ -105,5 +107,17 @@ public class MenuManagerScript : MonoBehaviour
         }
 
         SceneManager.LoadScene(sceneIndex);
+    }
+
+    public void ShowAboutUI()
+    {
+        if (AboutUI.activeSelf)
+        {
+            AboutUI.SetActive(false);
+        }
+        else
+        {
+            AboutUI.SetActive(true);
+        }
     }
 }
